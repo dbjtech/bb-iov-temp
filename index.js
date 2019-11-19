@@ -11,9 +11,10 @@ const router = new Router()
 const rq = request.defaults({ jar: true })
 
 const config = {
-	server: 'http://bigbrother.dbjtech.com',
+	server: process.env.host || 'http://bigbrother.dbjtech.com',
 	username: process.env.user,
 	password: process.env.password,
+	limit: Number(process.env.limit) || 100,
 }
 
 function fetch(method, uri, params) {
@@ -48,7 +49,7 @@ const toSeries = R.pipe(
 	}))
 )
 
-async function getLogs({ query = 'Logger', days = 1, limit = 10000 }) {
+async function getLogs({ query = 'Logger', days = 1, limit = config.limit }) {
 	const loginRes = await fetch('POST', 'api/login', { username: config.username, password: config.password })
 	// console.log(loginRes)
 	const now = Math.floor(Date.now() / 1000)
