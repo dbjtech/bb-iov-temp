@@ -48,7 +48,7 @@ const toSeries = R.pipe(
 	}))
 )
 
-async function getLogs({ query = 'Logger', days = 1, limit = 1000 }) {
+async function getLogs({ query = 'Logger', days = 1, limit = 10000 }) {
 	const loginRes = await fetch('POST', 'api/login', { username: config.username, password: config.password })
 	// console.log(loginRes)
 	const now = Math.floor(Date.now() / 1000)
@@ -127,4 +127,4 @@ app.use(router.routes())
 app.use(router.allowedMethods())
 
 const server = http.createServer(app.callback())
-server.listen(8080)
+server.listen(80)
